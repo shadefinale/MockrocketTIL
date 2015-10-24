@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'As a user, I want to be able to see a list of posts so that I can learn more things today' do
   context 'user vists root path' do
     before do
-      create(:post, title: "Test Post", body: "Lorem Ipsum")
+      create(:post, title: "Test Post", body: "Lorem Ipsum", created_at: "2014-10-10")
       create(:post)
       visit root_path
     end
@@ -17,6 +17,10 @@ feature 'As a user, I want to be able to see a list of posts so that I can learn
     scenario 'user can click on post to go to show page' do
       click_link(Post.last.title)
       expect(current_path).to eq(post_path(Post.last))
+    end
+
+    scenario 'user can see date of posts on index page' do
+      expect(page).to have_content("October 10, 2014")
     end
   end
 
