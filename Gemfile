@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
+ruby "2.2.2"
 
+gem 'twitter-bootstrap-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
@@ -32,9 +34,18 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+group :development do
+  gem 'guard-rspec', require: false
+  gem 'bullet'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'pry'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -43,3 +54,7 @@ group :development, :test do
   gem 'spring'
 end
 
+group :test do
+  gem 'capybara'
+  gem 'launchy'
+end
