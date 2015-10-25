@@ -3,6 +3,9 @@ ruby "2.2.2"
 
 gem 'faker'
 
+gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate-bootstrap'
+
 gem 'twitter-bootstrap-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

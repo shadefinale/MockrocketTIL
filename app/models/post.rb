@@ -1,4 +1,5 @@
 class Post < ActiveRecord::Base
+  self.per_page = 30
   belongs_to :tag
   belongs_to :author
 

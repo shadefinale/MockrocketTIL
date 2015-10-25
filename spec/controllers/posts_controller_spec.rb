@@ -2,24 +2,43 @@ require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
   context '#index' do
-    let(:tag)   { create(:tag) }
-    let!(:post1) { create(:post, tag: tag) }
-    let!(:post2) { create(:post) }
-    let!(:post3) { create(:post, tag: tag) }
 
-    it 'should return all posts' do
-      get :index
-      expect(assigns(:posts)).to match_array([post1, post2, post3])
+    context 'non-pagination' do
+      let(:tag)   { create(:tag) }
+      let!(:post1) { create(:post, tag: tag) }
+      let!(:post2) { create(:post) }
+      let!(:post3) { create(:post, tag: tag) }
+
+      it 'should return all posts' do
+        get :index
+        expect(assigns(:posts)).to match_array([post1, post2, post3])
+      end
+
+      it 'should return posts filtered by tag if a tag_id is provided' do
+        get :index, tag_id: tag.id
+        expect(assigns(:posts)).to match_array([post1, post3])
+      end
+
+      it 'should just return all posts if tag_id is nonsensical' do
+        get :index, tag_id: 'asdlfkjsdflj'
+        expect(assigns(:posts)).to match_array([post1, post2, post3])
+      end
     end
 
-    it 'should return posts filtered by tag if a tag_id is provided' do
-      get :index, tag_id: tag.id
-      expect(assigns(:posts)).to match_array([post1, post3])
-    end
+    context 'pagination' do
+      before do
+        create_list(:post, 50)
+      end
 
-    it 'should just return all posts if tag_id is nonsensical' do
-      get :index, tag_id: 'asdlfkjsdflj'
-      expect(assigns(:posts)).to match_array([post1, post2, post3])
+      it 'should return 30 results if no page passed' do
+        get :index, page: nil
+        expect(assigns(:posts).length).to eq(30)
+      end
+
+      it 'should return remaining results if not enough for full page' do
+        get :index, page: '2'
+        expect(assigns(:posts).length).to eq(20)
+      end
     end
   end
 

@@ -1,1 +1,3 @@
+<%= render partial: 'page_links', locals: { posts: @posts } if defined? @posts.total_pages %>
 <%= render @posts %>
+
