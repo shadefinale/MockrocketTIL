@@ -29,4 +29,10 @@ RSpec.describe PostsHelper, type: :helper do
       expect(raw_link(post1)).to eq(link_to("View Raw", post_path(post1, format: :text)))
     end
   end
+
+  context '#tag_link' do
+    it 'should return a link_to the posts_path along with the tag_id' do
+      expect(tag_link(post1)).to eq(link_to("#{post1.tag.name}", posts_path(tag_id: post1.tag.id), class: "tag"))
+    end
+  end
 end

@@ -8,5 +8,5 @@
 Post.destroy_all
 
 5.times do |idx|
-  Post.create(title: "My awesome post #)#{idx} ", body: "Lorem Ipsum")
+  Post.create(title: "My awesome post #)#{idx} ", body: "Lorem Ipsum", tag: Tag.create(name: "Tag #) #{idx}"))
 end

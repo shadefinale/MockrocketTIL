@@ -12,4 +12,8 @@ module PostsHelper
   def raw_link(post)
     link_to("View Raw", post_path(post, format: :text))
   end
+
+  def tag_link(post)
+    link_to("#{post.tag.name}", posts_path(tag_id: post.tag.id), class: "tag")
+  end
 end

@@ -1,6 +1,13 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    # Get the tag_id in the params, convert to a number or get nil
+    tag_id = params[:tag_id] ? params[:tag_id].to_i : nil
+
+    # Get the posts that match the tag_id
+    @posts = Post.includes(:tag).where('tag_id = ?', tag_id)
+
+    # If there weren't any matches, just return all the posts.
+    @posts = @posts.empty? ? Post.includes(:tag) : @posts
   end
 
   def show

@@ -22,6 +22,7 @@ feature 'As a user, I want to be able to see a list of posts so that I can learn
     scenario 'user can see date of posts on index page' do
       expect(page).to have_content("October 10, 2014")
     end
+
   end
 
 

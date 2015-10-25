@@ -2,12 +2,24 @@ require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
   context '#index' do
-    let(:post1) { create(:post) }
-    let(:post2) { create(:post) }
+    let(:tag)   { create(:tag) }
+    let!(:post1) { create(:post, tag: tag) }
+    let!(:post2) { create(:post) }
+    let!(:post3) { create(:post, tag: tag) }
 
     it 'should return all posts' do
       get :index
-      expect(assigns(:posts)).to match_array([post1, post2])
+      expect(assigns(:posts)).to match_array([post1, post2, post3])
+    end
+
+    it 'should return posts filtered by tag if a tag_id is provided' do
+      get :index, tag_id: tag.id
+      expect(assigns(:posts)).to match_array([post1, post3])
+    end
+
+    it 'should just return all posts if tag_id is nonsensical' do
+      get :index, tag_id: 'asdlfkjsdflj'
+      expect(assigns(:posts)).to match_array([post1, post2, post3])
     end
   end
 
