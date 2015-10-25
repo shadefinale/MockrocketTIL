@@ -1,17 +1,26 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+srand(12345)
 Post.destroy_all
 
-5.times do |idx|
-  tag = Tag.create(name: "Tag #) #{idx}")
-  author = Author.create(username: "Mr_#{idx}")
-  Post.create(title: "My awesome post #)#{idx} ",
-              body: "Lorem Ipsum",
-              tag: tag,
-              author: author)
+Post.destroy_all
+Author.destroy_all
+Tag.destroy_all
+
+10.times do
+  Author.create(username: Faker::Internet.user_name(nil, %w(- _)))
 end
+
+20.times do
+  Tag.create(name: Faker::Company.buzzword)
+end
+
+10.times do
+  Author.all.each do |author|
+    rand(0..2).times do |idx|
+      author.posts.create(title: Faker::Lorem.sentence,
+                          body: Faker::Lorem.paragraph(5, true, 5),
+                          likes: rand(0..5),
+                          tag: Tag.all.sample)
+    end
+  end
+end
+

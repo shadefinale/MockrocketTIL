@@ -1,4 +1,9 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 pull-left">
+    <div class="row">
+    <%= prev_button(@post) %>
+    <%= next_button(@post) %>
+  </div>
+  </div>
+</div>
 <%= render partial: 'post', locals: { post: @post } %>
-<%= prev_button(@post) %>
-<%= next_button(@post) %>
-<%= link_to("Back to index", root_path) %>

@@ -1,16 +1,16 @@
 module PostsHelper
   def next_button(post)
     next_post = post.next
-    next_post ? link_to("Next Post", next_post) : nil
+    next_post ? link_to("Next Post", next_post, class: "btn btn-success") : nil
   end
 
   def prev_button(post)
     prev_post = post.previous
-    prev_post ? link_to("Previous Post", prev_post) : nil
+    prev_post ? link_to("Previous Post", prev_post, class: "btn btn-danger") : nil
   end
 
   def raw_link(post)
-    link_to("View Raw", post_path(post, format: :text))
+    link_to("View Raw", post_path(post, format: :text), class: "btn btn-success")
   end
 
   def tag_link(post)
@@ -26,7 +26,7 @@ module PostsHelper
   end
 
   def like_button(post)
-    link_to(likes_count(post) + " " + like_action(post), like_path(post), method: "PUT", remote: true, data: {id: post.id}, class: "like")
+    link_to(likes_count(post) + " " + like_action(post), like_path(post), method: "PUT", remote: true, data: {id: post.id}, class: "like btn btn-info")
   end
 
   def like_action(post)

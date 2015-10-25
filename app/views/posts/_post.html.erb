@@ -1,9 +1,18 @@
-<div class="post">
-  <span><%= link_to post.title, post_path(post) %></span>
-  <span><%= post.body %></span>
-  <span><%= post.publish_date %></span>
-  <span><%= raw_link(post) %></span>
-  <span><%= tag_link(post) %></span>
-  <span><%= author_link(post) %></span>
-  <span><%= like_button(post) %></span>
+<div class="row">
+  <div class="post col-md-10 col-md-offset-1">
+    <div>
+      <h2><%= link_to post.title, post_path(post) %></h2>
+      <h6><%= post.publish_date %> | <%= author_link(post) %> | <%= tag_link(post) %></h6>
+    </div>
+    <div><%= post.body %></div>
+    
+    <div class="row">
+      <div class="col-xs-4 pull-right text-right">
+        <%= raw_link(post) %>
+      </div>
+      <div class="col-xs-4 pull-left">
+        <%= like_button(post) %>
+      </div>
+    </div>
+  </div>
 </div>

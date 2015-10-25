@@ -6,7 +6,7 @@ RSpec.describe PostsHelper, type: :helper do
 
   context '#next_button' do
     it 'should return a link_to if there is a next post' do
-      expect(next_button(post1)).to eq(link_to("Next Post", post2))
+      expect(next_button(post1)).to eq(link_to("Next Post", post2, class: "btn btn-success"))
     end
 
     it 'should return a nil if there is not a next post' do
@@ -16,7 +16,7 @@ RSpec.describe PostsHelper, type: :helper do
 
   context '#prev_button' do
     it 'should return a link_to if there is a previous post' do
-      expect(prev_button(post2)).to eq(link_to("Previous Post", post1))
+      expect(prev_button(post2)).to eq(link_to("Previous Post", post1, class: "btn btn-danger"))
     end
 
     it 'should return a nil if there is not a next post' do
@@ -26,7 +26,7 @@ RSpec.describe PostsHelper, type: :helper do
 
   context '#raw_link' do
     it 'should return a link_to the post with raw format' do
-      expect(raw_link(post1)).to eq(link_to("View Raw", post_path(post1, format: :text)))
+      expect(raw_link(post1)).to eq(link_to("View Raw", post_path(post1, format: :text), class: "btn btn-success"))
     end
   end
 
@@ -55,12 +55,12 @@ RSpec.describe PostsHelper, type: :helper do
   context '#like_button' do
     it 'should give us a clickable link to like a post' do
       session[:liked] = {}
-      expect(like_button(post1)).to eq(link_to("0 likes (Like)", like_path(post1), method: "PUT", remote: true, data: {id: post1.id}, class: "like"))
+      expect(like_button(post1)).to eq(link_to("0 likes (Like)", like_path(post1), method: "PUT", remote: true, data: {id: post1.id}, class: "like btn btn-info"))
     end
 
     it 'should give us a clickable link to unlike a post' do
       session[:liked] = {post2.id => true}
-      expect(like_button(post2)).to eq(link_to("1 like (Unlike)", like_path(post2), method: "PUT", remote: true, data: {id: post2.id}, class: "like"))
+      expect(like_button(post2)).to eq(link_to("1 like (Unlike)", like_path(post2), method: "PUT", remote: true, data: {id: post2.id}, class: "like btn btn-info"))
     end
   end
 

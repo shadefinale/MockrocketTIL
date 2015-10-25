@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 ruby "2.2.2"
 
+gem 'faker'
+
 gem 'twitter-bootstrap-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

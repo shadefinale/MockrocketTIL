@@ -4,11 +4,25 @@
   <title>Til</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="container">
 
-<%= yield %>
+  
+  <div class="row text-center">
+    <h1><%= link_to('MockrocketTIL', root_path) %></h1>
+  </div>
+
+  <div class="row text-center pull-center">
+    <div class="btn-group" role="group">
+      <%= link_to('About', root_path, class: 'btn btn-default') %>
+      <%= link_to('Search', root_path, class: 'btn btn-default') %>
+      <%= link_to('Stats', root_path, class: 'btn btn-default') %>
+    </div>
+  </div>
+
+  <%= yield %>
 
 </body>
 </html>
