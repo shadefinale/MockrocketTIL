@@ -8,4 +8,8 @@ module PostsHelper
     prev_post = post.previous
     prev_post ? link_to("Previous Post", prev_post) : nil
   end
+
+  def raw_link(post)
+    link_to("View Raw", post_path(post, format: :text))
+  end
 end

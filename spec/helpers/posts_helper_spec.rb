@@ -1,15 +1,5 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the PostsHelper. For example:
-#
-# describe PostsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe PostsHelper, type: :helper do
   let!(:post1) { create(:post) }
   let!(:post2) { create(:post) }
@@ -31,6 +21,12 @@ RSpec.describe PostsHelper, type: :helper do
 
     it 'should return a nil if there is not a next post' do
       expect(prev_button(post1)).to be_nil
+    end
+  end
+
+  context '#raw_link' do
+    it 'should return a link_to the post with raw format' do
+      expect(raw_link(post1)).to eq(link_to("View Raw", post_path(post1, format: :text)))
     end
   end
 end

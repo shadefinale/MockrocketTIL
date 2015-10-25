@@ -12,6 +12,13 @@ feature 'As a user, I want to be able to see a list of posts so that I can learn
       expect(page).to have_content("October 23, 2015")
       expect(page).to_not have_content(build(:post).title)
     end
+
+
+    scenario 'user vists non-existant post id' do
+      visit post_path(Post.last.id + 1)
+      expect(current_path).to eq(posts_path)
+    end
+
   end
 
   context 'previous/next post links' do

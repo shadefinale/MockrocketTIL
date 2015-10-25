@@ -15,15 +15,27 @@ RSpec.describe PostsController, type: :controller do
   context '#show' do
     let(:post) { create(:post) }
 
-    it 'should return a given post' do
-      get :show, id: post.id
-      expect(assigns(:post)).to eq(post)
+    context 'html requests' do
+      it 'should return a given post' do
+        get :show, id: post.id
+        expect(assigns(:post)).to eq(post)
+      end
+
+      it 'should redirect to posts index if post does not exist' do
+        expect(get :show, id: post.id + 1).to redirect_to(posts_path)
+      end
     end
 
-    it 'should raise an error if post does not exist' do
-      expect do
-        get :show, id: post.id + 1
-      end.to raise_error(ActiveRecord::RecordNotFound)
+    context 'text requests' do
+      it 'should return the given post body' do
+        get :show, id: post.id, format: :text
+        expect(response.body).to eq(post.body)
+      end
+
+      it 'should return a failure string if there is no post by given id' do
+        get :show, id: post.id + 1, format: :text
+        expect(response.body).to eq("Post not found.")
+      end
     end
   end
 
