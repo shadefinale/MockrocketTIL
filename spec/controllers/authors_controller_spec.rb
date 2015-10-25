@@ -12,6 +12,11 @@ RSpec.describe AuthorsController, type: :controller do
       get :show, id: author.id
       expect(assigns(:posts)).to match_array([post1, post3])
     end
+
+    it 'should return all posts if author does not exist' do
+      get :show, id: 'abc123yeah'
+      expect(assigns(:posts)).to match_array([post1, post2, post3])
+    end
   end
 
 end
