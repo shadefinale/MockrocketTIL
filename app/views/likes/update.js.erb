@@ -1,0 +1,4 @@
+(function(){
+  var $target = $('a[data-id=<%= @post.id%>]');
+  $target.text("<%= @js_string  %>");
+})();

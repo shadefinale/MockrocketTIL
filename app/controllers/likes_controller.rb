@@ -4,7 +4,11 @@ class LikesController < ApplicationController
 
   def update
     user_likes(@post) ? unlike_post(@post) : like_post(@post)
-    redirect_back
+    @js_string = like_string(@post) + (user_likes(@post) ? " (Unlike)" : " (Like)")
+    respond_to do |format|
+      format.html { redirect_back }
+      format.js { }
+    end
   end
 
   private
@@ -30,5 +34,9 @@ class LikesController < ApplicationController
       redirect_to(root_path) unless params[:id]
       @post = Post.find_by_id(params[:id].to_i)
       redirect_to(root_path) unless @post
+    end
+
+    def like_string(post)
+      post.likes.to_s + " " + "like".pluralize(post.likes)
     end
 end

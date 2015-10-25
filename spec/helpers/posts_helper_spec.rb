@@ -55,12 +55,12 @@ RSpec.describe PostsHelper, type: :helper do
   context '#like_button' do
     it 'should give us a clickable link to like a post' do
       session[:liked] = {}
-      expect(like_button(post1)).to eq(link_to("0 likes (Like)", like_path(post1), method: "PUT", class: "like"))
+      expect(like_button(post1)).to eq(link_to("0 likes (Like)", like_path(post1), method: "PUT", remote: true, data: {id: post1.id}, class: "like"))
     end
 
     it 'should give us a clickable link to unlike a post' do
       session[:liked] = {post2.id => true}
-      expect(like_button(post2)).to eq(link_to("1 like (Unlike)", like_path(post2), method: "PUT", class: "like"))
+      expect(like_button(post2)).to eq(link_to("1 like (Unlike)", like_path(post2), method: "PUT", remote: true, data: {id: post2.id}, class: "like"))
     end
   end
 

@@ -26,7 +26,7 @@ module PostsHelper
   end
 
   def like_button(post)
-    link_to(likes_count(post) + " " + like_action(post), like_path(post), method: "PUT", class: "like")
+    link_to(likes_count(post) + " " + like_action(post), like_path(post), method: "PUT", remote: true, data: {id: post.id}, class: "like")
   end
 
   def like_action(post)
