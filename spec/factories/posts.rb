@@ -3,6 +3,7 @@ FactoryGirl.define do
     title "MyString"
     body "MyText"
     association :tag
+    association :author
   end
 
 end

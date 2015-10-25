@@ -10,10 +10,18 @@ feature 'As a user, I want to be able to click on the tag of the post so that I 
     visit root_path
   end
 
-  context 'user vists root path' do
+  context 'user visits root path' do
     scenario 'user can click on tag to filter results solely by that tag' do
       expect(page).to have_content(Tag.first.name)
       first(".post").first(".tag").click
+      expect(page).to have_selector(".post", count: 3)
+    end
+  end
+
+  context 'user visits show page' do
+    scenario 'user can click on tag fro show page to filter results solely by that tag' do
+      visit post_path(Post.first)
+      first(".tag").click
       expect(page).to have_selector(".post", count: 3)
     end
   end

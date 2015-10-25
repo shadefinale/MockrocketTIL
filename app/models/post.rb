@@ -1,5 +1,6 @@
 class Post < ActiveRecord::Base
   belongs_to :tag
+  belongs_to :author
 
   def publish_date
     self.created_at.strftime("%B %d, %Y")

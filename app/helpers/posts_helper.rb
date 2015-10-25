@@ -16,4 +16,8 @@ module PostsHelper
   def tag_link(post)
     link_to("#{post.tag.name}", posts_path(tag_id: post.tag.id), class: "tag")
   end
+
+  def author_link(post)
+    link_to("By #{post.author.username}", author_path(post.author), class: "author")
+  end
 end
