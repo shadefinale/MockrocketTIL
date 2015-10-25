@@ -19,7 +19,7 @@ feature 'As a user, I want to be able to click on the tag of the post so that I 
   end
 
   context 'user visits show page' do
-    scenario 'user can click on tag fro show page to filter results solely by that tag' do
+    scenario 'user can click on tag from show page to filter results solely by that tag' do
       visit post_path(Post.first)
       first(".tag").click
       expect(page).to have_selector(".post", count: 3)
