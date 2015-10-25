@@ -13,4 +13,15 @@ class Post < ActiveRecord::Base
   def next
     Post.where("id > ?", self.id).first
   end
+
+  def increment_likes
+    self.likes += 1
+    self.save
+  end
+
+  def decrement_likes
+    self.likes -= 1
+    self.likes = 0 if self.likes < 0
+    self.save
+  end
 end

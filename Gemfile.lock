@@ -124,6 +124,9 @@ GEM
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack_session_access (0.1.1)
+      builder (>= 2.0.0)
+      rack (>= 1.0.0)
     rails (4.2.3)
       actionmailer (= 4.2.3)
       actionpack (= 4.2.3)
@@ -232,6 +235,7 @@ DEPENDENCIES
   launchy
   pg
   pry
+  rack_session_access
   rails (= 4.2.3)
   rspec-rails
   sass-rails (~> 5.0)

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PostsHelper, type: :helper do
   let!(:post1) { create(:post) }
-  let!(:post2) { create(:post) }
+  let!(:post2) { create(:post, likes: 1) }
 
   context '#next_button' do
     it 'should return a link_to if there is a next post' do
@@ -39,6 +39,40 @@ RSpec.describe PostsHelper, type: :helper do
   context '#author_link' do
     it 'should_return a link_to the author_path of the post author' do
       expect(author_link(post1)).to eq(link_to("By #{post1.author.username}", author_path(post1.author), class: "author"))
+    end
+  end
+
+  context '#likes_count' do
+    it 'should display the proper amount of likes to the user when not one like' do
+      expect(likes_count(post1)).to eq("0 likes")
+    end
+
+    it 'should display the proper amount of likes to the user when one like' do
+      expect(likes_count(post2)).to eq("1 like")
+    end
+  end
+
+  context '#like_button' do
+    it 'should give us a clickable link to like a post' do
+      session[:liked] = {}
+      expect(like_button(post1)).to eq(link_to("0 likes (Like)", like_path(post1), method: "PUT", class: "like"))
+    end
+
+    it 'should give us a clickable link to unlike a post' do
+      session[:liked] = {post2.id => true}
+      expect(like_button(post2)).to eq(link_to("1 like (Unlike)", like_path(post2), method: "PUT", class: "like"))
+    end
+  end
+
+  context '#like_action' do
+    it 'should say "Like" if post is not liked already' do
+      session[:liked] = {}
+      expect(like_action(post1)).to eq("(Like)")
+    end
+
+    it 'should say "Unlike" if post is not liked already' do
+      session[:liked] = {post1.id => true}
+      expect(like_action(post1)).to eq("(Unlike)")
     end
   end
 end

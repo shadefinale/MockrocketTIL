@@ -20,4 +20,17 @@ module PostsHelper
   def author_link(post)
     link_to("By #{post.author.username}", author_path(post.author), class: "author")
   end
+
+  def likes_count(post)
+    pluralize(post.likes, 'like')
+  end
+
+  def like_button(post)
+    link_to(likes_count(post) + " " + like_action(post), like_path(post), method: "PUT", class: "like")
+  end
+
+  def like_action(post)
+    return "(Like)" unless session && (session[:liked] || session["liked"])
+    (session[:liked][post.id] || session[:liked][post.id.to_s]) ? "(Unlike)" : "(Like)"
+  end
 end

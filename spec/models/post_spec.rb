@@ -37,5 +37,24 @@ RSpec.describe Post, type: :model do
       end
     end
   end
+
+  context '#increment_likes' do
+    let(:post1) { create(:post) }
+    it 'should increase the amount of likes on the post by 1' do
+      expect{post1.increment_likes}.to change{post1.likes}.by(1)
+    end
+  end
+
+  context '#decrement_likes' do
+    let(:post1) { create(:post, likes: 5) }
+    let(:post2) { create(:post) }
+    it 'should decrease the amount of likes on the post by 1' do
+      expect{post1.increment_likes}.to change{post1.likes}.by(1)
+    end
+
+    it 'should not decrease the amount of likes on the post if already at 0' do
+      expect{post2.decrement_likes}.to change{post2.likes}.by(0)
+    end
+  end
 end
 
