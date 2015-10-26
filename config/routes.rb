@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   resources :likes, only: [:update]
   resources :stats, only: [:index]
   resource :search, only: [:show]
+
+  get '/about', to: "static#about", as: :about
+
   root to: "posts#index"
 end

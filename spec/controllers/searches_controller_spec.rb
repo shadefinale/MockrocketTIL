@@ -9,7 +9,7 @@ RSpec.describe SearchesController, type: :controller do
 
     it 'should show all posts if no :search parameter' do
       get :show
-      expect(assigns(:posts)).to match_array([post1, post2, post3, post4])
+      expect(assigns(:posts)).to match_array([])
     end
 
     it 'should show only posts that match :search parameter' do
