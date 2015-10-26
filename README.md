@@ -1,5 +1,5 @@
 ## About
-MockrocketTIL is a clone of the [Hashrocket TIL microblog](til.hashrocket.com), and attempts to recreate the functionality of the site.
+[MockrocketTIL](http://mockrocket-til.herokuapp.com/) is a clone of the [Hashrocket TIL microblog](til.hashrocket.com), and attempts to recreate the functionality of the site.
 
 The application is fully test-driven and written in Ruby on Rails.
 
