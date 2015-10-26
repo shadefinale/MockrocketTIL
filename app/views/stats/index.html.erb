@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-12 post calendar">
+    <h2> Post counts by day </h2>
+    <% @posts_by_day.each do |day, count| %>
+      <div class="row">
+        <div class="col-xs-12 stats">
+          <%= "#{ day.strftime('%m/%d/%Y') } - #{count} posts" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 post">
+    <h2> Top ten liked posts </h2>
+    <% @most_liked_posts.each do |post| %>
+      <div class="row">
+        <div class="col-xs-12 stats">
+          <%= link_to("#{post.title} - #{post.likes} likes", post) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 post">
+    <h2> Authors by post count </h2>
+    <% @authors_by_posts.each do |author| %>
+      <div class="row">
+        <div class="col-xs-12 stats">
+          <%= link_to("#{author.username} - #{author.posts.count} posts", author) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-6 post">
+    <h2> Tags by post count </h2>
+    <% @tags_by_posts.each do |tag| %>
+      <div class="row">
+        <div class="col-xs-12 stats">
+          <%= link_to("#{tag.name} - #{tag.posts.count} posts", posts_path(tag)) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

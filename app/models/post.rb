@@ -25,4 +25,12 @@ class Post < ActiveRecord::Base
     self.likes = 0 if self.likes < 0
     self.save
   end
+
+  def self.most_liked
+    Post.order(likes: :desc).limit(10)
+  end
+
+  def self.by_day(days=28)
+    Post.select("date(created_at)").order("date(created_at)").group("date(created_at)").count
+  end
 end

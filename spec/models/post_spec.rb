@@ -56,5 +56,34 @@ RSpec.describe Post, type: :model do
       expect{post2.decrement_likes}.to change{post2.likes}.by(0)
     end
   end
+
+  context '::most_liked' do
+    before do
+      15.times do |idx|
+        create(:post, likes: idx)
+      end
+    end
+
+    it 'should return 10 posts' do
+      expect(Post.most_liked.length).to be <= 10
+    end
+
+    it 'should return posts in descending order' do
+      most_liked_posts = Post.most_liked
+      expect(most_liked_posts.order(likes: :desc)).to eq(most_liked_posts)
+    end
+  end
+
+  context '::by_day' do
+    before do
+      30.times do |idx|
+        create(:post, created_at: DateTime.now - idx.day)
+      end
+    end
+
+    it 'should return a result where every day has one post' do
+      expect(Post.by_day.values).to all( be > 0)
+    end
+  end
 end
 

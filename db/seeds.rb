@@ -13,12 +13,13 @@ end
   Tag.create(name: Faker::Company.buzzword)
 end
 
-10.times do
+30.times do |idx|
   Author.all.each do |author|
-    rand(0..2).times do |idx|
+    rand(0..1).times do
       author.posts.create(title: Faker::Lorem.sentence,
                           body: Faker::Lorem.paragraph(5, true, 5),
-                          likes: rand(0..5),
+                          created_at: idx.days.ago,
+                          likes: rand(0..30),
                           tag: Tag.all.sample)
     end
   end
