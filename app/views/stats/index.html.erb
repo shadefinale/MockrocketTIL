@@ -38,7 +38,7 @@
     <% @tags_by_posts.each do |tag| %>
       <div class="row">
         <div class="col-xs-12 stats">
-          <%= link_to("#{tag.name} - #{tag.posts.count} posts", posts_path(tag)) %>
+          <%= link_to("#{tag.name} - #{tag.posts.count} posts", posts_path(tag_id: tag)) %>
         </div>
       </div>
     <% end %>
