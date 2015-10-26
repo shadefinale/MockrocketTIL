@@ -33,4 +33,8 @@ class Post < ActiveRecord::Base
   def self.by_day(days=28)
     Post.select("date(created_at)").order("date(created_at)").group("date(created_at)").count
   end
+
+  def self.search(query)
+    Post.where('body ILIKE ? OR title ILIKE ?', "%#{query}%", "%#{query}%")
+  end
 end

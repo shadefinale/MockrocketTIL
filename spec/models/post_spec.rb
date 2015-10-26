@@ -85,5 +85,25 @@ RSpec.describe Post, type: :model do
       expect(Post.by_day.values).to all( be > 0)
     end
   end
+
+  context '::search' do
+    before do
+      create(:post, body: 'testy')
+      create(:post, body: 'test')
+      create(:post, body: 'TESTER')
+    end
+
+    it 'should return even partial matches' do
+      expect(Post.search('test').length).to eq(3)
+    end
+
+    it 'should match case insensitive' do
+      expect(Post.search('tester').length).to eq(1)
+    end
+
+    it 'should return empty collection if no matches' do
+      expect(Post.search('asdafsdf').length).to eq(0)
+    end
+  end
 end
 
