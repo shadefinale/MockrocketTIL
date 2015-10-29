@@ -1,5 +1,5 @@
 ## About
-https://codeship.com/projects/958462d0-5fff-0133-49e1-5a99c145e314/status?branch=master
+![](https://codeship.com/projects/958462d0-5fff-0133-49e1-5a99c145e314/status?branch=master)
 [MockrocketTIL](http://til-shadefinale.rhcloud.com/) is a clone of the [Hashrocket TIL microblog](http://til.hashrocket.com), and attempts to recreate the functionality of the site.
 
 The application is fully test-driven and written in Ruby on Rails.
