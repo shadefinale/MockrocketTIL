@@ -11,4 +11,23 @@ class AuthorsController < ApplicationController
 
     render "posts/index"
   end
+
+  def new
+    @author = Author.new
+  end
+
+  def create
+    @author = Author.new(whitelist_author_params)
+
+    if @author.save
+      redirect_to root_path
+    else
+      render :new
+    end
+  end
+
+  private
+    def whitelist_author_params
+      params.require(:author).permit(:username, :password, :password_confirmation)
+    end
 end
