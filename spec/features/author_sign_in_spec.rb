@@ -24,6 +24,7 @@ feature 'As an author, I want to be able to sign in to use the site so that I ca
     scenario 'signing invalid username/password combo' do
       fill_out_signin_form(username: @author.username, password: "blah")
       click_button('Sign In')
+      expect(page).to have_content("Please try again")
       expect(current_path).to eq(new_author_path)
     end
   end
