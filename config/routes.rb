@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :stats, only: [:index]
   resource :search, only: [:show]
 
+  resource :sessions, only: [:create, :destroy]
+
   get '/about', to: "static#about", as: :about
 
   root to: "posts#index"
