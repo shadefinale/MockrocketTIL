@@ -17,6 +17,7 @@ feature 'As an author, I want to be able to sign up to use the site so that I ca
     scenario 'signing up with valid information' do
       fill_out_signup_form
       expect{click_button "Sign Up"}.to change(Author, :count).by(1)
+      expect(page).to have_content("Sign Out")
       expect(current_path).to eq(root_path)
     end
 

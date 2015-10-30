@@ -20,6 +20,7 @@ class AuthorsController < ApplicationController
     @author = Author.new(whitelist_author_params)
 
     if @author.save
+      sign_in(@author)
       redirect_to root_path
     else
       render :new
