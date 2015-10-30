@@ -11,4 +11,22 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe AuthorsHelper, type: :helper do
+  describe '#field_with_errors' do
+    it 'should be empty if no errors' do
+      a = build(:author)
+      a.valid?
+
+      expect(field_with_errors(a, :username).length).to eq(0)
+    end
+
+    it 'should be empty if no errors' do
+      a = build(:author, username: "abc12")
+      a.valid?
+
+      expect(field_with_errors(a, :username)).to eq(
+        content_tag(:div, class: "error") { :username.to_s.titleize + " " + a.errors[:username].first }
+      )
+    end
+
+  end
 end

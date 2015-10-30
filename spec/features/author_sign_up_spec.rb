@@ -23,6 +23,7 @@ feature 'As an author, I want to be able to sign up to use the site so that I ca
     scenario 'signing up invalid username' do
       fill_out_signup_form(username: "test user")
       expect{click_button "Sign Up"}.to change(Author, :count).by(0)
+      expect(page).to have_content("Username is invalid")
     end
 
     scenario 'signing up invalid password' do
