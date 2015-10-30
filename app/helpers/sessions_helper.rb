@@ -6,4 +6,10 @@ module SessionsHelper
       link_to('Sign In/Up', new_author_path, class: 'btn btn-default')
     end
   end
+
+  def link_to_current_user(current_user)
+    if current_user
+      link_to("#{current_user.username.capitalize}'s Posts", current_user, class: 'btn btn-default')
+    end
+  end
 end

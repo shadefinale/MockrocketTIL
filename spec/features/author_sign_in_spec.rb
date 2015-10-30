@@ -18,6 +18,7 @@ feature 'As an author, I want to be able to sign in to use the site so that I ca
       expect(current_path).to eq(root_path)
       expect(current_auth_token).to_not be_nil
       expect(page).to_not have_content("Sign In/Up")
+      expect(page).to have_content("#{@author.username.capitalize}'s Posts")
     end
 
     scenario 'signing invalid username/password combo' do

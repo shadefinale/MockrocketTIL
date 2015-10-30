@@ -7,7 +7,7 @@ class AuthorsController < ApplicationController
     @posts = Post.includes(:tag, :author).where('author_id = ?', author_id)
 
     # If there weren't any matches, just return all the posts.
-    @posts = @posts.empty? ? Post.includes(:tag, :author) : @posts
+    @posts = Author.find_by_id(author_id) ? @posts : Post.includes(:tag, :author)
 
     render "posts/index"
   end

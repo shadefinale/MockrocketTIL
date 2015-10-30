@@ -20,6 +20,7 @@
     <div class="btn-group" role="group">
       <%= link_to('About', about_path, class: 'btn btn-default') %>
       <%= sign_in_or_out_link(current_user) %>
+      <%= link_to_current_user(current_user) %>
       <%= link_to('Search', search_path, class: 'btn btn-default', id: 'search') %>
       <%= link_to('Stats', stats_path, class: 'btn btn-default') %>
     </div>
