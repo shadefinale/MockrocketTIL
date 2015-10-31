@@ -75,4 +75,18 @@ RSpec.describe PostsHelper, type: :helper do
       expect(like_action(post1)).to eq("(Unlike)")
     end
   end
+
+  context '#new_post_button' do
+    it 'should link to new_post_path if current_user author' do
+      author = create(:author)
+      current_user = author
+      expect(new_post_button(current_user, author.id)).to eq(link_to("Create Post", new_post_path))
+    end
+
+    it 'should not link to new_post_path if current_user is not author' do
+      author = create(:author)
+      current_user = build(:author)
+      expect(new_post_button(current_user, author.id)).to be_nil
+    end
+  end
 end

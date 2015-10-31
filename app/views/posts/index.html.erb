@@ -1,3 +1,4 @@
 <%= render partial: 'page_links', locals: { posts: @posts } if defined? @posts.total_pages %>
+<%= new_post_button(current_user, @author_id) %>
 <%= render @posts %>
 
