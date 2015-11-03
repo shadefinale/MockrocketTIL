@@ -49,8 +49,7 @@ RSpec.describe PostsController, type: :controller do
     context 'html requests' do
       it 'should return a given post' do
         get :show, id: post.id
-        expect(assigns(:post)).to eq(post)
-      end
+        expect(assigns(:post)).to eq(post) end
 
       it 'should redirect to posts index if post does not exist' do
         expect(get :show, id: post.id + 1).to redirect_to(posts_path)
@@ -134,6 +133,25 @@ RSpec.describe PostsController, type: :controller do
 
       end
 
+    end
+  end
+
+  context '#destroy' do
+    let!(:author) { create(:author) }
+    let!(:other_author) { create(:author) }
+    let!(:test_post) { create(:post, author: author) }
+    it 'should destroy a post of owner' do
+      allow(controller).to receive(:current_user) { author }
+      expect do
+        delete :destroy, id: test_post.id
+      end.to change(Post, :count).by(-1)
+    end
+
+    it 'should not destroy a post if not owner' do
+      allow(controller).to receive(:current_user) { other_author }
+      expect do
+        delete :destroy, id: test_post.id
+      end.to change(Post, :count).by(0)
     end
   end
 end

@@ -30,6 +30,11 @@ module PostsHelper
     link_to(likes_count(post) + " " + like_action(post), like_path(post), method: "PUT", remote: true, data: {id: post.id}, class: "like btn btn-info")
   end
 
+  def delete_button(author, post)
+    return nil unless post.author && author && post.author.id == author.id
+    link_to("Delete Post", post, method: "DELETE", remote: true, data: {id: post.id, confirm: "Are you sure?"}, class: "like btn btn-danger")
+  end
+
   def like_action(post)
     return "(Like)" unless session && (session[:liked] || session["liked"])
     (session[:liked][post.id] || session[:liked][post.id.to_s]) ? "(Unlike)" : "(Like)"

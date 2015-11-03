@@ -1,8 +1,10 @@
 class PostsController < ApplicationController
   before_action :require_logged_in, only: [:new, :create]
+  before_action :get_post_and_author, only: [:edit, :update, :destroy]
+  before_action :require_owner, only: [:edit, :update, :destroy]
   def index
     params[:tag_id] ? posts_by_tag : posts_by_page
-    @posts = @posts.order(created_at: :desc)
+    @posts = @posts.order(created_at: :desc) unless @posts.empty?
   end
 
   def new
@@ -36,9 +38,31 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post.destroy
+    unless on_root_path
+      redirect_to posts_path
+    else
+      respond_to do |format|
+        format.js { }
+        format.html { redirect_to posts_path }
+      end
+    end
+  end
+
   private
+    def on_root_path
+      request && request.referer && URI(request.referer).path == root_path
+    end
     def whitelist_post_params
       params.require(:post).permit(:title, :body)
+    end
+
+    def get_post_and_author
+      @post = Post.find_by_id(params[:id])
+      @author = @post.author if @post.author
+
+      redirect_to(root_path) unless @post && @author
     end
 
     def posts_by_page

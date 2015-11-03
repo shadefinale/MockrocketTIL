@@ -80,6 +80,23 @@ RSpec.describe PostsHelper, type: :helper do
     end
   end
 
+  context '#delete_button' do
+    let(:author) { create(:author) }
+    let(:test_post) { create(:post, author: author)}
+
+    it 'should create a delete button for the post if post owner' do
+      expect(delete_button(author, test_post)).to eq(
+        link_to("Delete Post", test_post, method: "DELETE", remote: true, data: {id: test_post.id, confirm: "Are you sure?"}, class: "like btn btn-danger")
+      )
+    end
+
+    it 'should be nil if not owner' do
+      other_author = create(:author)
+      expect(delete_button(other_author, test_post)).to be_nil
+    end
+
+  end
+
   context '#new_post_button' do
     it 'should link to new_post_path if current_user author' do
       author = create(:author)
