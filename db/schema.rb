@@ -11,16 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025161323) do
+ActiveRecord::Schema.define(version: 20151030110403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "authors", force: :cascade do |t|
-    t.string   "username",   null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "username",        null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "password_digest"
+    t.string   "auth_token"
   end
+
+  add_index "authors", ["auth_token"], name: "index_authors_on_auth_token", unique: true, using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.string   "title",                  null: false

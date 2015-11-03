@@ -1,7 +1,31 @@
 class Post < ActiveRecord::Base
+  validates :title,
+            presence: true,
+            length: {in: 3..64,
+                    message: " should be between 3 and 64 characters"}
+
+  validates :body,
+            presence: true,
+            length: {in: 1..200,
+                     message: " should be between 1 and 200 words",
+                     tokenizer: ->(str) { str.scan(/\w+/) }
+                    }
+
   self.per_page = 30
-  belongs_to :tag
+  # We autosave the tag so we can find_or_create by and not have duplicates.
+  belongs_to :tag, autosave: true
+
   belongs_to :author
+
+  accepts_nested_attributes_for :tag
+
+  # If two users try to make a post with tag 'Ruby', we'll ensure
+  # that each post is tagged to the same tag, and not two different
+  # tags named 'Ruby'.
+  def autosave_associated_records_for_tag
+    self.tag = Tag.find_or_create_by(name: tag.name)
+    self.tag.save!
+  end
 
   def publish_date
     self.created_at.strftime("%B %d, %Y")

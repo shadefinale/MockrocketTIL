@@ -1,6 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
+  context 'validations' do
+    it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_presence_of(:body) }
+    it { is_expected.to validate_length_of(:title) }
+    it { is_expected.to validate_length_of(:body) }
+
+    it 'should be valid' do
+      expect(build(:post)).to be_valid
+    end
+
+  end
+
   context '#publish_date' do
     it 'should return creation date in human readable format' do
       post = create(:post, created_at: "2015-10-23 01:00:00")

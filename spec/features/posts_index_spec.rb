@@ -4,7 +4,7 @@ feature 'As a user, I want to be able to see a list of posts so that I can learn
   context 'user vists root path' do
     before do
       create(:post, title: "Test Post", body: "Lorem Ipsum", created_at: "2014-10-10")
-      create(:post)
+      create(:post, created_at: "2014-9-9")
       visit root_path
     end
 

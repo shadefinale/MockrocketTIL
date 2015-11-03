@@ -6,7 +6,9 @@ Author.destroy_all
 Tag.destroy_all
 
 10.times do
-  Author.create(username: Faker::Internet.user_name(nil, %w(- _)))
+  Author.create(username: Faker::Internet.user_name(nil, %w(_)),
+                password: "aaaaaaaa",
+                password_confirmation: "aaaaaaaa")
 end
 
 20.times do
@@ -18,7 +20,7 @@ end
     rand(0..1).times do
       author.posts.create(title: Faker::Lorem.sentence,
                           body: Faker::Lorem.paragraph(5, true, 5),
-                          created_at: idx.days.ago,
+                          created_at: (31 - idx).days.ago,
                           likes: rand(0..30),
                           tag: Tag.all.sample)
     end

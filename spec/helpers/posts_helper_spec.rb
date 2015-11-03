@@ -31,6 +31,10 @@ RSpec.describe PostsHelper, type: :helper do
   end
 
   context '#tag_link' do
+    it 'should return nil if post has no tag' do
+      post2.tag = nil
+      expect(tag_link(post2)).to be_nil
+    end
     it 'should return a link_to the posts_path along with the tag_id' do
       expect(tag_link(post1)).to eq(link_to("#{post1.tag.name}", posts_path(tag_id: post1.tag.id), class: "tag"))
     end
@@ -73,6 +77,54 @@ RSpec.describe PostsHelper, type: :helper do
     it 'should say "Unlike" if post is not liked already' do
       session[:liked] = {post1.id => true}
       expect(like_action(post1)).to eq("(Unlike)")
+    end
+  end
+
+  context '#delete_button' do
+    let(:author) { create(:author) }
+    let(:test_post) { create(:post, author: author)}
+
+    it 'should create a delete button for the post if post owner' do
+      expect(delete_button(author, test_post)).to eq(
+        link_to("Delete Post", test_post, method: "DELETE", remote: true, data: {id: test_post.id, confirm: "Are you sure?"}, class: "like btn btn-danger")
+      )
+    end
+
+    it 'should be nil if not owner' do
+      other_author = create(:author)
+      expect(delete_button(other_author, test_post)).to be_nil
+    end
+
+  end
+
+  context '#edit_button' do
+    let(:author) { create(:author) }
+    let(:test_post) { create(:post, author: author)}
+
+    it 'should create a delete button for the post if post owner' do
+      expect(edit_button(author, test_post)).to eq(
+        link_to("Edit Post", edit_post_path(test_post), class: "btn btn-info")
+      )
+    end
+
+    it 'should be nil if not owner' do
+      other_author = create(:author)
+      expect(edit_button(other_author, test_post)).to be_nil
+    end
+
+  end
+
+  context '#new_post_button' do
+    it 'should link to new_post_path if current_user author' do
+      author = create(:author)
+      current_user = author
+      expect(new_post_button(current_user, author.id)).to eq(link_to("Create Post", new_post_path, class: "btn btn-info"))
+    end
+
+    it 'should not link to new_post_path if current_user is not author' do
+      author = create(:author)
+      current_user = build(:author)
+      expect(new_post_button(current_user, author.id)).to be_nil
     end
   end
 end
