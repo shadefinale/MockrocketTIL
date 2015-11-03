@@ -32,6 +32,7 @@ feature 'As a user, I want to be able to edit a post so that I can tell people w
 
     # Guy also sees the previous contents of the post.
     expect(page).to have_selector("input[value='" + p.title + "']")
+    expect(page).to have_selector("input[value='" + p.tag.name + "']")
     # Then, Guy edits the post's title.
     fill_in("Title", with: "New Title")
 

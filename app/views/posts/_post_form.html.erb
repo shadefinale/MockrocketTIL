@@ -11,7 +11,7 @@
     <%= f.text_area :body %>
   </div>
 
-  <%= f.fields_for :tag, Tag.new do |tag_fields| %>
+  <%= f.fields_for :tag, @post.tag || Tag.new do |tag_fields| %>
     <div class="form-group">
       <%= tag_fields.label :name, "Tag" %>
       <%= tag_fields.text_field :name %>
