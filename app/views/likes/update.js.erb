@@ -1,4 +1,4 @@
 (function(){
-  var $target = $('a[data-id=<%= @post.id%>]');
+  var $target = $('a[data-id=<%= @post.id%>]').last();
   $target.text("<%= @js_string  %>");
 })();
