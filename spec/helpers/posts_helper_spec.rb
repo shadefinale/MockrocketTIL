@@ -84,7 +84,7 @@ RSpec.describe PostsHelper, type: :helper do
     it 'should link to new_post_path if current_user author' do
       author = create(:author)
       current_user = author
-      expect(new_post_button(current_user, author.id)).to eq(link_to("Create Post", new_post_path, class: "btn btn-success"))
+      expect(new_post_button(current_user, author.id)).to eq(link_to("Create Post", new_post_path, class: "btn btn-info"))
     end
 
     it 'should not link to new_post_path if current_user is not author' do

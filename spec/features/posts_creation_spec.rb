@@ -10,6 +10,13 @@ feature 'As a user, I want to be able to create a post so that I can tell people
     click_button("Sign In")
   end
 
+  scenario 'author can see post creation button on show page' do
+    p = create(:post, author: @author)
+    visit post_path(p)
+
+    expect(page).to have_content("Create Post")
+  end
+
   scenario 'author wants to create post' do
     # Guy wants to create a post, so after logging in he looks at his posts.
     visit author_path(@author)
@@ -77,6 +84,11 @@ feature 'As a user, I want to be able to create a post so that I can tell people
 
   scenario 'should not display a "Create Post" on other user show page' do
     visit author_path(@other_author)
+    expect(page).to_not have_content("Create Post")
+  end
+
+  scenario 'should not display a "Create Post" on show page of non authored post' do
+    p = create(:post, author: @other_author)
     expect(page).to_not have_content("Create Post")
   end
 

@@ -3,6 +3,7 @@
     <div class="row">
     <%= prev_button(@post) %>
     <%= next_button(@post) %>
+    <%= new_post_button(current_user, @post.author.id) %>
   </div>
   </div>
 </div>
