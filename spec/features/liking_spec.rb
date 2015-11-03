@@ -3,8 +3,8 @@ require 'rails_helper'
 feature 'As a user, I want to be able to click the "like" button so that I can show how much I like the post.' do
   context 'user viewing likes' do
     before do
-      create(:post, likes: 3)
-      create(:post, likes: 1)
+      create(:post, likes: 3, created_at: "2014-10-10")
+      create(:post, likes: 1, created_at: "2014-9-9")
     end
 
     scenario 'user on root path' do
@@ -27,8 +27,8 @@ feature 'As a user, I want to be able to click the "like" button so that I can s
 
   context 'user liking and unliking posts' do
     before do
-      @post1 = create(:post)
-      @post2 = create(:post, likes: 3)
+      @post1 = create(:post, created_at: "2014-10-10")
+      @post2 = create(:post, likes: 3, created_at: "2014-9-9")
     end
     scenario 'user interacting with site' do
       # Bob visits the site again and looks at the posts index

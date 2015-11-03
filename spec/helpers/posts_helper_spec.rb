@@ -31,6 +31,10 @@ RSpec.describe PostsHelper, type: :helper do
   end
 
   context '#tag_link' do
+    it 'should return nil if post has no tag' do
+      post2.tag = nil
+      expect(tag_link(post2)).to be_nil
+    end
     it 'should return a link_to the posts_path along with the tag_id' do
       expect(tag_link(post1)).to eq(link_to("#{post1.tag.name}", posts_path(tag_id: post1.tag.id), class: "tag"))
     end
@@ -80,7 +84,7 @@ RSpec.describe PostsHelper, type: :helper do
     it 'should link to new_post_path if current_user author' do
       author = create(:author)
       current_user = author
-      expect(new_post_button(current_user, author.id)).to eq(link_to("Create Post", new_post_path))
+      expect(new_post_button(current_user, author.id)).to eq(link_to("Create Post", new_post_path, class: "btn btn-success"))
     end
 
     it 'should not link to new_post_path if current_user is not author' do

@@ -1,4 +1,16 @@
 class Post < ActiveRecord::Base
+  validates :title,
+            presence: true,
+            length: {in: 3..64,
+                    message: " should be between 3 and 64 characters"}
+
+  validates :body,
+            presence: true,
+            length: {in: 1..200,
+                     message: " should be between 1 and 200 words",
+                     tokenizer: ->(str) { str.scan(/\w+/) }
+                    }
+
   self.per_page = 30
   belongs_to :tag
   belongs_to :author

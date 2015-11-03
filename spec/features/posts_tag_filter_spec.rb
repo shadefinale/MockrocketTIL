@@ -13,7 +13,7 @@ feature 'As a user, I want to be able to click on the tag of the post so that I 
   context 'user visits root path' do
     scenario 'user can click on tag to filter results solely by that tag' do
       expect(page).to have_content(Tag.first.name)
-      first(".post").first(".tag").click
+      click_link(Tag.first.name, match: :first)
       expect(page).to have_selector(".post", count: 3)
     end
   end
@@ -21,7 +21,7 @@ feature 'As a user, I want to be able to click on the tag of the post so that I 
   context 'user visits show page' do
     scenario 'user can click on tag from show page to filter results solely by that tag' do
       visit post_path(Post.first)
-      first(".tag").click
+      click_link(Tag.first.name, match: :first)
       expect(page).to have_selector(".post", count: 3)
     end
   end

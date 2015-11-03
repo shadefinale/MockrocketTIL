@@ -8,6 +8,7 @@ class AuthorsController < ApplicationController
 
     # If there weren't any matches, just return all the posts.
     @posts = Author.find_by_id(@author_id) ? @posts : Post.includes(:tag, :author)
+    @posts = @posts.order(created_at: :desc)
 
     render "posts/index"
   end

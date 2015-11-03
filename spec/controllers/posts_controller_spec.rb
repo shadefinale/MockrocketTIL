@@ -70,4 +70,70 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
+  context 'post creation' do
+    let(:author) { create(:author) }
+
+
+    context '#new' do
+
+      it 'should redirect to root path if not logged in' do
+        allow(controller).to receive(:current_user) { false }
+        expect(get :new).to redirect_to(root_path)
+      end
+
+      it 'should assign a new post to current author' do
+        allow(controller).to receive(:current_user) { author }
+        get :new
+        expect(assigns(:post)).to_not be_nil
+      end
+    end
+
+    context '#create' do
+      it 'should create a new post belonging to current_user' do
+        allow(controller).to receive(:current_user) { author }
+        new_post = build(:post)
+        new_post_attrs = new_post.attributes
+        new_post_attrs[:tag] = "Ruby"
+        post :create, post: new_post_attrs
+        expect(Post.last.title).to eq(new_post.title)
+        expect(Post.last.body).to eq(new_post.body)
+        expect(Post.last.author).to eq(author)
+      end
+
+      it 'should not create a post if no current user' do
+        new_post = build(:post)
+        new_post_attrs = new_post.attributes
+        new_post_attrs[:tag] = "Ruby"
+        expect do
+          post :create, post: new_post_attrs
+        end.to change(Post, :count).by(0)
+      end
+
+      context 'length validations' do
+        before do
+          allow(controller).to receive(:current_user) { author }
+        end
+
+        it 'should not create a post if invalid title length' do
+          new_post = build(:post, title: 'aa')
+          new_post_attrs = new_post.attributes
+          new_post_attrs[:tag] = "Ruby"
+          expect do
+            post :create, post: new_post_attrs
+          end.to change(Post, :count).by(0)
+        end
+
+        it 'should not create a post if invalid body length' do
+          new_post = build(:post, body: 'abbaa ' * 202)
+          new_post_attrs = new_post.attributes
+          new_post_attrs[:tag] = "Ruby"
+          expect do
+            post :create, post: new_post_attrs
+          end.to change(Post, :count).by(0)
+        end
+
+      end
+
+    end
+  end
 end

@@ -14,6 +14,7 @@ module PostsHelper
   end
 
   def tag_link(post)
+    return nil if post.tag.nil?
     link_to("#{post.tag.name}", posts_path(tag_id: post.tag.id), class: "tag")
   end
 
@@ -35,6 +36,6 @@ module PostsHelper
   end
 
   def new_post_button(current_user, target_user_id)
-    (target_user_id && current_user) && (current_user.id == target_user_id) ? link_to("Create Post", new_post_path) : nil
+    (target_user_id && current_user) && (current_user.id == target_user_id) ? link_to("Create Post", new_post_path, class: "btn btn-success") : nil
   end
 end

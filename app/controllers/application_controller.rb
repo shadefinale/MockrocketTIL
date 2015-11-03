@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     def require_logged_in
       unless current_user
         flash[:notice] = "You must be logged in!"
-        redirect_to referer
+        redirect_to referer || root_path
       end
     end
 

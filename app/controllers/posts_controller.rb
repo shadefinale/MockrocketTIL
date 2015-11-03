@@ -1,6 +1,25 @@
 class PostsController < ApplicationController
+  before_action :require_logged_in, only: [:new, :create]
   def index
     params[:tag_id] ? posts_by_tag : posts_by_page
+    @posts = @posts.order(created_at: :desc)
+  end
+
+  def new
+    @post = Post.new
+  end
+
+  def create
+    @post = Post.new(whitelist_post_params)
+    @tag = Tag.find_or_create_by(name: params[:post][:tag] || 'No Tag')
+    @post.author = current_user
+    @post.tag = @tag
+
+    if @post.save
+      redirect_to @post
+    else
+      render :new
+    end
   end
 
   def show
@@ -18,6 +37,10 @@ class PostsController < ApplicationController
   end
 
   private
+    def whitelist_post_params
+      params.require(:post).permit(:title, :body)
+    end
+
     def posts_by_page
       page = params[:page] || 1
       @posts = Post.page(page)
