@@ -7,11 +7,12 @@
     <div><%= post.body %></div>
     
     <div class="row">
-      <div class="col-xs-4 pull-right text-right">
+      <div class="col-xs-10 pull-right text-right">
+        <%= edit_button(current_user, post) %>
         <%= delete_button(current_user, post) %>
         <%= raw_link(post) %>
       </div>
-      <div class="col-xs-4 pull-left">
+      <div class="col-xs-2 pull-left">
         <%= like_button(post) %>
       </div>
     </div>

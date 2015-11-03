@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :require_logged_in, only: [:new, :create]
+  before_action :require_logged_in, except: [:index, :show]
   before_action :get_post_and_author, only: [:edit, :update, :destroy]
   before_action :require_owner, only: [:edit, :update, :destroy]
   def index
@@ -13,14 +13,25 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(whitelist_post_params)
-    @tag = Tag.find_or_create_by(name: params[:post][:tag] || 'No Tag')
     @post.author = current_user
-    @post.tag = @tag
 
     if @post.save
       redirect_to @post
     else
       render :new
+    end
+  end
+
+  def edit
+    @post = Post.find_by_id(params[:id])
+    redirect_to posts_path if @post.nil?
+  end
+
+  def update
+    if @post.update(whitelist_post_params)
+      redirect_to @post
+    else
+      render :edit
     end
   end
 
@@ -40,27 +51,24 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    unless on_root_path
-      redirect_to posts_path
-    else
-      respond_to do |format|
-        format.js { }
-        format.html { redirect_to posts_path }
-      end
+    respond_to do |format|
+      format.js { on_show_path ? (render js: "window.location = '/'") : (render :destroy) }
+      format.html { redirect_to posts_path }
     end
   end
 
   private
-    def on_root_path
-      request && request.referer && URI(request.referer).path == root_path
+    def on_show_path
+      request && request.referer && URI(request.referer).path == post_path
     end
+
     def whitelist_post_params
-      params.require(:post).permit(:title, :body)
+      params.require(:post).permit(:title, :body, { :tag_attributes => [:name] })
     end
 
     def get_post_and_author
       @post = Post.find_by_id(params[:id])
-      @author = @post.author if @post.author
+      @author = @post.author if @post
 
       redirect_to(root_path) unless @post && @author
     end

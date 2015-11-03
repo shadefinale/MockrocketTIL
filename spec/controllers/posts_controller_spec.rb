@@ -92,7 +92,7 @@ RSpec.describe PostsController, type: :controller do
         allow(controller).to receive(:current_user) { author }
         new_post = build(:post)
         new_post_attrs = new_post.attributes
-        new_post_attrs[:tag] = "Ruby"
+        new_post_attrs[:tag_attributes] = {name: "test"}
         post :create, post: new_post_attrs
         expect(Post.last.title).to eq(new_post.title)
         expect(Post.last.body).to eq(new_post.body)
@@ -152,6 +152,37 @@ RSpec.describe PostsController, type: :controller do
       expect do
         delete :destroy, id: test_post.id
       end.to change(Post, :count).by(0)
+    end
+  end
+
+  context '#edit' do
+    let!(:author) { create(:author) }
+    let!(:other_author) { create(:author) }
+    let!(:test_post) { create(:post, author: author) }
+
+    context 'author logged in' do
+      before do
+        allow(controller).to receive(:current_user) { author }
+      end
+
+      it 'should find a post if it exists' do
+        get :edit, id: test_post.id
+        expect(assigns(:post)).to eq(test_post)
+      end
+
+      it 'should redirect to posts path if post is not found' do
+        expect(get :edit, id: test_post.id + 1).to redirect_to(root_path)
+      end
+
+      it 'should redirect to posts path if not owner' do
+        allow(controller).to receive(:current_user) { other_author }
+        expect(get :edit, id: test_post.id).to redirect_to(root_path)
+      end
+
+    end
+
+    it 'should redirect if no author' do
+      expect(get :edit, id: test_post.id).to redirect_to(root_path)
     end
   end
 end
